@@ -35,7 +35,12 @@ class EquiposController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datosEquipos = request()->except('_token');
+        if($request->hasFile('foto_Info_Tec')){
+            $datosEquipos['foto_Info_Tec']=$request->file('foto_Info_Tec')->store('uploads','public');
+        };
+        equipos::insert($datosEquipos);
+        return response()->json($datosEquipos);
     }
 
     /**
